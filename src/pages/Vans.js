@@ -2,7 +2,7 @@ import React from 'react';
 
 function Vans() {
   const [vans, setVans] = React.useState([]);
-//useEffect with dependency array empty so it runs fetch only on page load
+  //useEffect with dependency array empty so it runs fetch only on page load
   React.useEffect(() => {
     fetch('/api/vans')
       .then((res) => res.json())
@@ -25,7 +25,7 @@ function Vans() {
   return (
     <div className="van-list-container">
       <h1>Explore our van options</h1>
-      {vansDis}
+      <div className="van-list">{vansDis}</div>
     </div>
   );
 }
