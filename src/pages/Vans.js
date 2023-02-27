@@ -11,7 +11,7 @@ function Vans() {
 
   const vansDis = vans.map((van) => (
     <div key={van.id} className="van-tile">
-      <img src={van.imageUrl} alt="van display" width={200} />
+      <img src={van.imageUrl} alt="van display" />
       <div className="van-info">
         <h3>{van.name}</h3>
         <p>
