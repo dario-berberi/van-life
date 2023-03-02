@@ -1,7 +1,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Layout from './components/Layout';
-import Home from './pages/Home';
 import HostLayout from './components/HostLayout';
+import Home from './pages/Home';
 import Dashboard from './pages/Host/Dashboard';
 import Income from './pages/Host/Income';
 import HostVans from './pages/Host/HostVans';
@@ -13,6 +13,7 @@ import Reviews from './pages/Host/Reviews';
 import About from './pages/About';
 import Vans from './pages/Vans/Vans';
 import VanDetail from './pages/Vans/VanDetail';
+import NotFound from './pages/NotFound';
 
 import './server';
 
@@ -41,6 +42,7 @@ function App() {
          * the param object properties will be named the same as what comes after : (our case {id: id-of-van})
         */}
         <Route path='vans/:id' element={<VanDetail />} />
+        <Route path='*' element={<NotFound />} />
       </Route>
     </Routes>
    </BrowserRouter>
