@@ -1,32 +1,17 @@
 import React from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLoaderData } from 'react-router-dom';
 import { getVans } from '../../api';
+
+export function loader(){
+  return getVans()
+}
+
 function Vans() {
-  const [searchParams, setSearchparams] = useSearchParams();
-
-  const [vans, setVans] = React.useState([]);
-
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+ 
+  const vans = useLoaderData()
 
   const typeFilter = searchParams.get('type');
-
-  //useEffect with dependency array empty so it runs fetch only on page load
-  React.useEffect(() => {
-    async function loadVans() {
-      setLoading(true);
-      try {
-        const data = await getVans();
-        setVans(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadVans();
-  }, []);
 
   //check if we have any filters before filtering the display array of vans and if not diplay all of it
   const displayedVans = typeFilter ? vans.filter((van) => van.type === typeFilter) : vans;
@@ -53,46 +38,59 @@ function Vans() {
     </div>
   ));
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
+//use a function to make sure that when we go back and fourth from vans to vans details no other filters get changed 
+//the only ones that will apply are the filters we choose from the filter nav bar in vans
 
-  if (error) {
-    return <h1>There was an error: {error.message}</h1>;
-  }
+  function handleFilterChange(key, value) {
+    setSearchParams(prevParams => {
+        if (value === null) {
+            prevParams.delete(key)
+        } else {
+            prevParams.set(key, value)
+        }
+        return prevParams
+    })
+}
 
-  return (
+return (
     <div className="van-list-container">
-      <h1>Explore our van options</h1>
-      <div className="van-list-filter-buttons">
-        <button
-          onClick={() => setSearchparams({ type: 'simple' })}
-          className={`van-type simple ${typeFilter === 'simple' && 'selected'}`}
-        >
-          Simple
-        </button>
-        <button
-          onClick={() => setSearchparams({ type: 'luxury' })}
-          className={`van-type luxury ${typeFilter === 'luxury' && 'selected'}`}
-        >
-          Luxury
-        </button>
-        <button
-          onClick={() => setSearchparams({ type: 'rugged' })}
-          className={`van-type rugged ${typeFilter === 'rugged' && 'selected'}`}
-        >
-          Rugged
-        </button>
-        {/**conditionally render the clear filters only when a filter is selected */}
-        {typeFilter && (
-          <button onClick={() => setSearchparams({})} className="van-type clear-filters">
-            Clear filters
-          </button>
-        )}
-      </div>
-      <div className="van-list">{vanElements}</div>
+        <h1>Explore our van options</h1>
+        <div className="van-list-filter-buttons">
+            <button
+                onClick={() => handleFilterChange("type", "simple")}
+                className={
+                    `van-type simple 
+                    ${typeFilter === "simple" ? "selected" : ""}`
+                }
+            >Simple</button>
+            <button
+                onClick={() => handleFilterChange("type", "luxury")}
+                className={
+                    `van-type luxury 
+                    ${typeFilter === "luxury" ? "selected" : ""}`
+                }
+            >Luxury</button>
+            <button
+                onClick={() => handleFilterChange("type", "rugged")}
+                className={
+                    `van-type rugged 
+                    ${typeFilter === "rugged" ? "selected" : ""}`
+                }
+            >Rugged</button>
+
+            {typeFilter ? (
+                <button
+                    onClick={() => handleFilterChange("type", null)}
+                    className="van-type clear-filters"
+                >Clear filter</button>
+            ) : null}
+
+        </div>
+        <div className="van-list">
+            {vanElements}
+        </div>
     </div>
-  );
+)
 }
 
 export default Vans;
