@@ -19,7 +19,9 @@ import Reviews from './pages/Host/Reviews';
 import About from './pages/About';
 import Vans, {loader as vansLoader} from './pages/Vans/Vans';
 import VanDetail from './pages/Vans/VanDetail';
+import Login, {action as loginAction} from './pages/Login';
 import NotFound from './pages/NotFound';
+import AuthRequired from './components/AuthRequired';
 
 import './server';
 
@@ -27,19 +29,21 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
-
-      <Route path="host" element={<HostLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="income" element={<Income />} />
-        <Route path="vans" element={<HostVans />}  />
-        
-        <Route path="vans/:id" element={<HostVanDetail />}>
-          <Route index element={<HostVanInfo />} />
-          <Route path="pricing" element={<HostVanPricing />} />
-          <Route path="photos" element={<HostVanPhotos />} />
+      
+      <Route element={<AuthRequired />}>
+        <Route path="host" element={<HostLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="income" element={<Income />} />
+          <Route path="vans" element={<HostVans />}  />
+          
+          <Route path="vans/:id" element={<HostVanDetail />}>
+            <Route index element={<HostVanInfo />} />
+            <Route path="pricing" element={<HostVanPricing />} />
+            <Route path="photos" element={<HostVanPhotos />} />
+          </Route>
+          
+          <Route path="reviews" element={<Reviews />} />
         </Route>
-        
-        <Route path="reviews" element={<Reviews />} />
       </Route>
 
       <Route path="about" element={<About />} />
@@ -48,6 +52,7 @@ const router = createBrowserRouter(
        * the param object properties will be named the same as what comes after : (our case {id: id-of-van})
        */}
       <Route path="vans/:id" element={<VanDetail />} />
+      <Route path="login" element={<Login />} action={loginAction}/>
       <Route path="*" element={<NotFound />} />
     </Route>
   )
