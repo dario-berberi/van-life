@@ -59,6 +59,6 @@ createServer({
                 user: foundUser,
                 token: "Enjoy your pizza, here's your tokens."
             }
-        })
+        }, {timing: 2000})
     }
 })

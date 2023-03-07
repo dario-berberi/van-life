@@ -8,7 +8,7 @@ function Error(){
     return(
         <>
             <h1>Error: {error.message}</h1>
-            <pre >{error.cause.status} - {error.cause.statusText}</pre>
+            <pre >{error.cause?.status} - {error.cause?.statusText}</pre>
         </>
     )
 }
