@@ -4,6 +4,7 @@ import { getHostVans } from '../../api';
 //import { getHostVans } from '../../api/firebase';
 
 export function loader() {
+  //return defer({ hostVans: getHostVans() });
   return defer({ hostVans: getHostVans() });
 }
 

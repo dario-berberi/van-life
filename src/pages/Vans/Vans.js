@@ -5,6 +5,7 @@ import { getVans } from '../../api';
 import { Suspense } from 'react';
 
 export function loader() {
+  //return defer({ vans: getAllVans() });
   return defer({ vans: getVans() });
 }
 

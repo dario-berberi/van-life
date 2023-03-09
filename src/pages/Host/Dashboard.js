@@ -5,6 +5,7 @@ import { BsStarFill } from "react-icons/bs"
 import { getHostVans } from "../../api"
 
 export function loader() {
+    //return defer({ vans: getHostVans() })
     return defer({ vans: getHostVans() })
 }
 
