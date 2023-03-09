@@ -3,11 +3,11 @@
 */
 import { useLocation, useLoaderData, Link, Await, defer } from "react-router-dom"
 import React, {Suspense} from "react";
-//import { getVans } from "../../api";
-import { getVan } from "../../api/firebase";
+import { getVans } from "../../api";
+//import { getVan } from "../../api/firebase";
 
 export function loader({params}){
-    return defer({vanDetail: getVan(params.id)})
+    return defer({vanDetail: getVans(params.id)})
 }
 
 function VanDetail(){
