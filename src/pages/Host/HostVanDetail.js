@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react';
 import { Link, NavLink, Outlet, useLoaderData, Await, defer } from 'react-router-dom';
-//import { getHostVans } from '../../api';
-import { getVan } from '../../api/firebase';
+import { getHostVans } from '../../api';
+//import { getVan } from '../../api/firebase';
 
 export function loader({ params }) {
-  return defer({ hostVanDetail: getVan(params.id) });
+  return defer({ hostVanDetail: getHostVans(params.id) });
 }
 
 function HostVanDetail() {
